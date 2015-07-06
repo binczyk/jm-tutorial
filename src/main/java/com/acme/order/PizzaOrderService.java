@@ -11,12 +11,9 @@ public class PizzaOrderService {
 	private OrderFactory orderFactory;
 
 	private DeliveryTimeService deliveryTimeService;
-	
+
 	private MessageTemplateService messageTemplate;
 
-	
-	
-	
 	public PizzaOrderService(MailSender mailSender, OrderDatabase orderDatabase, OrderFactory orderFactory,
 			DeliveryTimeService deliveryTimeService, MessageTemplateService messageTemplate) {
 		super();
@@ -34,6 +31,7 @@ public class PizzaOrderService {
 			order.withEstimatedTime(date);
 			orderDatabase.save(order);
 			mailSender.send(createMessage(order), customer.getEmail());
+
 		} catch (Exception e) {
 			orderDatabase.rollback();
 		}
